@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import kz.kbtu.meshchat.Fragment.FriendsFragment;
 import kz.kbtu.meshchat.Fragment.MessagesFragment;
-import kz.kbtu.meshchat.Fragment.ProfileFragment;
+import kz.kbtu.meshchat.Fragment.RecentFragment;
 import kz.kbtu.meshchat.R;
 
 public class MainActivity extends AppCompatActivity
@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         switch (id){
-            case R.id.nav_profile:
-                showFragment(new ProfileFragment());
+            case R.id.nav_recent:
+                showFragment(new RecentFragment());
                 break;
             case R.id.nav_friends:
                 showFragment(new FriendsFragment());
