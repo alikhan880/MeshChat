@@ -1,9 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="kz.kbtu.meshchat.Activity.LoginActivity">
+<RelativeLayout
+xmlns:android = "http://schemas.android.com/apk/res/android"
+xmlns:app = "http://schemas.android.com/apk/res-auto"
+xmlns:tools = "http://schemas.android.com/tools"
+android:layout_width = "match_parent"
+android:layout_height = "match_parent"
+tools:context="kz.kbtu.meshchat.Activity.LoginActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+	<android.support.design.widget.TextInputLayout
+		android:id="@+id/EmailTextInputLayout"
+		android:layout_margin="8dp"
+		android:layout_width = "match_parent"
+		android:layout_above = "@+id/passwordTextInputLayout" android:layout_alignParentLeft = "true"
+		android:layout_alignParentStart = "true"
+		android:layout_height = "wrap_content">
+		
+		<android.support.design.widget.TextInputEditText
+			android:id="@+id/emailEditText"
+			android:layout_width = "match_parent"
+		    android:layout_height = "wrap_content"
+			android:inputType="textEmailAddress"
+			android:hint="Email"
+		
+		/>
+		
+	</android.support.design.widget.TextInputLayout>
+	
+	<android.support.design.widget.TextInputLayout
+		android:id="@+id/passwordTextInputLayout"
+		android:layout_alignLeft = "@+id/EmailTextInputLayout"
+		android:layout_alignStart = "@+id/EmailTextInputLayout"
+		android:layout_alignRight = "@+id/EmailTextInputLayout"
+		android:layout_alignEnd = "@+id/EmailTextInputLayout"
+		android:layout_width = "match_parent"
+		android:layout_above = "@+id/loginButton"
+		android:layout_height = "wrap_content">
+		<android.support.design.widget.TextInputEditText
+			android:layout_width = "match_parent"
+		    android:layout_height = "wrap_content"
+			android:hint="Password"
+			android:inputType="textPassword"
+			android:id="@+id/passwordEditText"
+		/>
+		
+	</android.support.design.widget.TextInputLayout>
+
+	<Button
+		android:id="@+id/loginButton"
+		android:text="login"
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_marginBottom = "176dp"
+		android:layout_above = "@+id/view"
+		android:layout_centerHorizontal = "true"/>
+	
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="2dp"
+		android:background="#cecece"
+		android:layout_above="@+id/linearLayout2"
+		android:id = "@+id/view"/>
+	<LinearLayout
+		android:id="@+id/linearLayout2"
+		android:layout_width = "match_parent"
+		android:layout_height = "48dp"
+		android:orientation = "horizontal"
+		android:gravity="center"
+		android:layout_alignParentBottom = "true"
+		android:layout_alignParentLeft = "true"
+		android:layout_alignParentStart = "true"
+	>
+		<TextView
+			android:textAlignment="center"
+			android:textSize="16sp"
+			android:hint="Don't have an Account?"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"/>
+		<TextView
+			android:id="@+id/signUpTextView"
+			android:layout_marginLeft="2dp"
+			android:textAlignment="center"
+			android:textSize="16sp"
+			android:text="Sign up"
+			android:textStyle="bold"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"/>
+	</LinearLayout>
+</RelativeLayout>

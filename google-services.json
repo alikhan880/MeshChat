@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "402428085352-d1lpq7mn58266ct81cn0dv6sg387hmul.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "kz.kbtu.meshchat",
-            "certificate_hash": "366f8117dd1d5be5b8f68cebe84263366137c633"
-          }
-        },
-        {
           "client_id": "402428085352-kvoumkubublagst05prrgh6vujfufrfu.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "402428085352-kvoumkubublagst05prrgh6vujfufrfu.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

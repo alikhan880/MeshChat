@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +33,19 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int SIGN_IN_REQUEST_CODE = 404;
-    private static final String TAG = "DEBUG";
-    private FirebaseAuth mAuth;
+    private static final String TAG = "MainActivity";
+	private static final int LOGIN_ACTIVITY_REQUEST_CODE = 401;
+	private FirebaseAuth mAuth;
     private TextView tvUsername;
     private TextView tvUserEmail;
     private ImageView ivUserPhoto;
-
-    @Override
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
+	
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -63,13 +70,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         bind();
+		if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivityForResult(intent, LOGIN_ACTIVITY_REQUEST_CODE);
+		}
         loadProfile();
     }
 
-
-    private void loadProfile(){
+	private void loadProfile(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String name = user.getDisplayName();
+        if (user == null) return;
+	    String name = user.getDisplayName();
         String email = user.getEmail();
         Uri uri = user.getPhotoUrl();
 
@@ -118,8 +129,23 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("StatementWithEmptyBody")
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case LOGIN_ACTIVITY_REQUEST_CODE:
+				if (resultCode == RESULT_OK) {
+					loadProfile();
+				} else {
+					setResult(RESULT_CANCELED);
+					finish();
+				}
+				break;
+		}
+	}
+	
+	@SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -135,13 +161,10 @@ public class MainActivity extends AppCompatActivity
                 showFragment(new MessagesFragment());
                 break;
             case R.id.nav_logout:
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
                 FirebaseAuth.getInstance().signOut();
                 finish();
-                break;
+	            break;
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
