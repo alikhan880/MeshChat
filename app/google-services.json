@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "181865063539",
+    "firebase_url": "https://meshchat-5f71f.firebaseio.com",
+    "project_id": "meshchat-5f71f",
+    "storage_bucket": "meshchat-5f71f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181865063539:android:2f9cce5dbe71209e",
+        "android_client_info": {
+          "package_name": "kz.kbtu.meshchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181865063539-bmm5sbqirsitpchaa8qkjnvrrt2kbl4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.kbtu.meshchat",
+            "certificate_hash": "6ed879311b1daef9d59516612b0c482ea09c7f3f"
+          }
+        },
+        {
+          "client_id": "181865063539-8glj1km9ngiri2jabllv3ts81p6vkugu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUAghjeuwpdZr6_DR1vHIHTJB33sZPiuI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181865063539-8glj1km9ngiri2jabllv3ts81p6vkugu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
