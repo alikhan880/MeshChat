@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         bind();
-        loadProfile();
+        authorize();
     }
 
 
@@ -84,6 +85,35 @@ public class MainActivity extends AppCompatActivity
         tvUsername = (TextView)v.findViewById(R.id.textView_username);
         tvUserEmail = (TextView)v.findViewById(R.id.textView_user_email);
         ivUserPhoto = (ImageView)v.findViewById(R.id.image_user);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case SIGN_IN_REQUEST_CODE:
+                if(resultCode == RESULT_OK){
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                    loadProfile();
+                    showFragment(new RecentFragment());
+                }
+                else{
+                    finish();
+                }
+                break;
+        }
+    }
+
+    private void authorize(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            loadProfile();
+            showFragment(new RecentFragment());
+        }
+        else{
+            Intent intent = AuthUI.getInstance().createSignInIntentBuilder().build();
+            startActivityForResult(intent, SIGN_IN_REQUEST_CODE);
+        }
     }
 
 
