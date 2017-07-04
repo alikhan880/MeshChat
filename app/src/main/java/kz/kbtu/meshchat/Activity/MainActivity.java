@@ -22,12 +22,14 @@ import android.widget.TextView;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import kz.kbtu.meshchat.Fragment.FriendsFragment;
 import kz.kbtu.meshchat.Fragment.MessagesFragment;
 import kz.kbtu.meshchat.Fragment.RecentFragment;
 import kz.kbtu.meshchat.R;
+import kz.kbtu.meshchat.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -92,6 +94,10 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode){
             case SIGN_IN_REQUEST_CODE:
                 if(resultCode == RESULT_OK){
+                    String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+                    String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    db.getReference("/users").push().setValue(new User(name, email));
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                     loadProfile();
