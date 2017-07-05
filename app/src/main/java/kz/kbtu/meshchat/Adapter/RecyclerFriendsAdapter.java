@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import kz.kbtu.meshchat.Interface.RecyclerItemListener;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.User;
 
@@ -17,9 +18,11 @@ import kz.kbtu.meshchat.User;
 
 public class RecyclerFriendsAdapter extends RecyclerView.Adapter<RecyclerFriendsAdapter.RecyclerFriendsViewHolder> {
     private ArrayList<User> users;
+    private RecyclerItemListener listener;
 
-    public RecyclerFriendsAdapter(ArrayList<User> users) {
+    public RecyclerFriendsAdapter(ArrayList<User> users, RecyclerItemListener listener) {
         this.users = users;
+        this.listener = listener;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class RecyclerFriendsAdapter extends RecyclerView.Adapter<RecyclerFriends
         User user = users.get(position);
         holder.username.setText(user.getUsername());
         holder.email.setText(user.getEmail());
+
     }
 
     public User getItem(int position){
@@ -51,7 +55,12 @@ public class RecyclerFriendsAdapter extends RecyclerView.Adapter<RecyclerFriends
             super(itemView);
             username = (TextView)itemView.findViewById(R.id.recycler_item_friends_textView_username);
             email = (TextView)itemView.findViewById(R.id.recycler_item_friends_textView_email);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.itemClicked(getAdapterPosition());
+                }
+            });
 
         }
 

@@ -1,5 +1,6 @@
 package kz.kbtu.meshchat.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,12 +18,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import kz.kbtu.meshchat.Activity.MessagingActivity;
 import kz.kbtu.meshchat.Adapter.RecyclerFriendsAdapter;
+import kz.kbtu.meshchat.Interface.RecyclerItemListener;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.User;
 
 
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment implements RecyclerItemListener {
 
     private RecyclerView recycler;
     private RecyclerFriendsAdapter adapter;
@@ -42,7 +46,7 @@ public class FriendsFragment extends Fragment {
         getUsers();
         recycler = (RecyclerView)v.findViewById(R.id.recycler_friends);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RecyclerFriendsAdapter(users);
+        adapter = new RecyclerFriendsAdapter(users, this);
         recycler.setAdapter(adapter);
         return v;
     }
@@ -55,7 +59,9 @@ public class FriendsFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = dataSnapshot.getValue(User.class);
 //                Log.d("DEBUG", user.getUsername() + "");
-                users.add(user);
+                if(!user.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+                    users.add(user);
+                }
                 adapter.notifyDataSetChanged();
             }
 
@@ -87,4 +93,11 @@ public class FriendsFragment extends Fragment {
     }
 
 
+    @Override
+    public void itemClicked(int position) {
+        User user = adapter.getItem(position);
+        Intent intent = new Intent(getActivity(), MessagingActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+    }
 }
