@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import kz.kbtu.meshchat.Fragment.FriendsFragment;
-import kz.kbtu.meshchat.Fragment.MessagesFragment;
 import kz.kbtu.meshchat.Fragment.RecentFragment;
 import kz.kbtu.meshchat.R;
 
@@ -67,6 +66,7 @@ public class MainActivity extends AppCompatActivity
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY_REQUEST_CODE);
 		}
+
         loadProfile();
     }
 
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
 			case LOGIN_ACTIVITY_REQUEST_CODE:
 				if (resultCode == RESULT_OK) {
 					loadProfile();
-                    showFragment(new RecentFragment());
+//                    showFragment(new MessagesFragment());
 				} else {
 					setResult(RESULT_CANCELED);
 					finish();
@@ -151,9 +151,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_friends:
                 showFragment(new FriendsFragment());
-                break;
-            case R.id.nav_messages:
-                showFragment(new MessagesFragment());
                 break;
             case R.id.nav_logout:
                 FirebaseAuth.getInstance().signOut();
