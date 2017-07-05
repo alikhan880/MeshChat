@@ -2,8 +2,8 @@ package kz.kbtu.meshchat.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +38,12 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
+        users = new ArrayList<>();
         getUsers();
+        recycler = (RecyclerView)v.findViewById(R.id.recycler_friends);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new RecyclerFriendsAdapter(users);
+        recycler.setAdapter(adapter);
         return v;
     }
 
@@ -49,18 +54,22 @@ public class FriendsFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("DEBUG", user.getUsername() + "");
+//                Log.d("DEBUG", user.getUsername() + "");
+                users.add(user);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                User user = dataSnapshot.getValue(User.class);
-                Log.d("DEBUG", user.getUsername() + "");
+//                User user = dataSnapshot.getValue(User.class);
+//                Log.d("DEBUG", user.getUsername() + "");
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                User user = dataSnapshot.getValue(User.class);
+                users.remove(user);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -76,7 +85,6 @@ public class FriendsFragment extends Fragment {
         ref.addChildEventListener(userListener);
 
     }
-
 
 
 }

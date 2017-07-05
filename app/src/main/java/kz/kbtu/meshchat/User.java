@@ -13,6 +13,14 @@ public class User {
 
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof User))
+			return false;
+		User u = (User) obj;
+		return u.getUsername().equals(getUsername()) && u.getEmail().equals(getEmail());
+	}
+
 	public User(String username, String email) {
 		this.username = username;
 		this.email = email;
