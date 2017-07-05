@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -45,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
 		emailEditText = (TextInputEditText) findViewById(R.id.emailEditText);
 		passwordEditText = (TextInputEditText) findViewById(R.id.passwordEditText);
 		
-		emailEditText.setText("aisultan.kali@gmail.com");
-		passwordEditText.setText("Qwerty123");
+//		emailEditText.setText("aisultan.kali@gmail.com");
+//		passwordEditText.setText("Qwerty123");
 		
 		loginButton = (Button) findViewById(R.id.loginButton);
 		signUpTextView = (TextView) findViewById(R.id.signUpTextView);

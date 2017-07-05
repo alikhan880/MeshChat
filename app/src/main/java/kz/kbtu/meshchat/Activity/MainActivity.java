@@ -13,40 +13,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import kz.kbtu.meshchat.Fragment.FriendsFragment;
 import kz.kbtu.meshchat.Fragment.MessagesFragment;
 import kz.kbtu.meshchat.Fragment.RecentFragment;
 import kz.kbtu.meshchat.R;
-import kz.kbtu.meshchat.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int SIGN_IN_REQUEST_CODE = 404;
-    private static final String TAG = "MainActivity";
 	private static final int LOGIN_ACTIVITY_REQUEST_CODE = 401;
-	private FirebaseAuth mAuth;
     private TextView tvUsername;
     private TextView tvUserEmail;
     private ImageView ivUserPhoto;
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-	}
+
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +62,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         bind();
-<<<<<<< HEAD
-        authorize();
-=======
+
 		if (FirebaseAuth.getInstance().getCurrentUser() == null) {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY_REQUEST_CODE);
 		}
         loadProfile();
->>>>>>> 5f159dffc67a68af90cb19a41dd4d2ec7a1eeaae
     }
 
 	private void loadProfile(){
@@ -104,38 +90,6 @@ public class MainActivity extends AppCompatActivity
         ivUserPhoto = (ImageView)v.findViewById(R.id.image_user);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case SIGN_IN_REQUEST_CODE:
-                if(resultCode == RESULT_OK){
-                    String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                    String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                    FirebaseDatabase db = FirebaseDatabase.getInstance();
-                    db.getReference("/users").push().setValue(new User(name, email));
-                    startActivity(new Intent(this, MainActivity.class));
-                    finish();
-                    loadProfile();
-                    showFragment(new RecentFragment());
-                }
-                else{
-                    finish();
-                }
-                break;
-        }
-    }
-
-    private void authorize(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            loadProfile();
-            showFragment(new RecentFragment());
-        }
-        else{
-            Intent intent = AuthUI.getInstance().createSignInIntentBuilder().build();
-            startActivityForResult(intent, SIGN_IN_REQUEST_CODE);
-        }
-    }
 
 
     @Override
@@ -177,6 +131,7 @@ public class MainActivity extends AppCompatActivity
 			case LOGIN_ACTIVITY_REQUEST_CODE:
 				if (resultCode == RESULT_OK) {
 					loadProfile();
+                    showFragment(new RecentFragment());
 				} else {
 					setResult(RESULT_CANCELED);
 					finish();

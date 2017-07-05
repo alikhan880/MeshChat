@@ -6,26 +6,6 @@ package kz.kbtu.meshchat;
  */
 
 public class User {
-    private String username;
-    private String email;
-
-    public User(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-=======
- * Created by aqali on 7/4/17 for MeshChat.
- */
-
-public class User {
 	private String username;
 	private String email;
 	
@@ -57,5 +37,4 @@ public class User {
 				", email='" + email + '\'' +
 				'}';
 	}
->>>>>>> 5f159dffc67a68af90cb19a41dd4d2ec7a1eeaae
 }
