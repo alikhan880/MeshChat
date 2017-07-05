@@ -41,17 +41,20 @@ public class RecyclerMessagesAdapter extends RecyclerView.Adapter<RecyclerMessag
 		Message msg = messages.get(position);
 		String curUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 		String curUserHash = Utils.hash(curUserEmail);
-		holder.rightSide.setVisibility(View.GONE);
-		holder.leftSide.setVisibility(View.VISIBLE);
 		if (msg.getMessageUser().getHash().equals(curUserHash)) {
 			holder.leftSide.setVisibility(View.GONE);
 			holder.rightSide.setVisibility(View.VISIBLE);
+			holder.message2TextView.setText(msg.getMessageText());
+		} else{
+			holder.rightSide.setVisibility(View.GONE);
+			holder.leftSide.setVisibility(View.VISIBLE);
+			holder.message1TextView.setText(msg.getMessageText());
 		}
 	}
 	
 	@Override
 	public int getItemCount() {
-		return 0;
+		return messages.size();
 	}
 	
 	public class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,6 +62,10 @@ public class RecyclerMessagesAdapter extends RecyclerView.Adapter<RecyclerMessag
 		private TextView message1TextView, message2TextView;
 		public ViewHolder(View itemView) {
 			super(itemView);
+			leftSide = (RelativeLayout) itemView.findViewById(R.id.leftSideRelativeLayout);
+			rightSide = (RelativeLayout) itemView.findViewById(R.id.rightSideRelativeLayout);
+			message1TextView = (TextView) itemView.findViewById(R.id.message1TextView);
+			message2TextView = (TextView) itemView.findViewById(R.id.message2TextView);
 		}
 	}
 }

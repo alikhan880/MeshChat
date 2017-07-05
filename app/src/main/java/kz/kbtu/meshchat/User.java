@@ -69,12 +69,10 @@ public class User implements Parcelable{
 				", email='" + email + '\'' +
 				'}';
 	}
-//<<<<<<< HEAD
-	
+
 	public String getHash() {
 		return Utils.hash(email);
 	}
-//=======
 
 	@Override
 	public int describeContents() {
@@ -85,6 +83,5 @@ public class User implements Parcelable{
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(username);
 		dest.writeString(email);
-//>>>>>>> c2e06742dc5701c11f85ac631f6791c4035aa265
 	}
 }
