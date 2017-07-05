@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "402428085352",
+    "firebase_url": "https://gochat-29950.firebaseio.com",
+    "project_id": "gochat-29950",
+    "storage_bucket": "gochat-29950.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402428085352:android:2f9cce5dbe71209e",
+        "android_client_info": {
+          "package_name": "kz.kbtu.meshchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402428085352-kvoumkubublagst05prrgh6vujfufrfu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8VKmdQGjZ4GiUlwKUUA-tbE5hoqNk-Oc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

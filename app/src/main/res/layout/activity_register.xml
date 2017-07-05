@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android = "http://schemas.android.com/apk/res/android"
+xmlns:app = "http://schemas.android.com/apk/res-auto"
+xmlns:tools = "http://schemas.android.com/tools"
+android:layout_width = "match_parent"
+android:layout_height = "match_parent"
+tools:context = "kz.kbtu.meshchat.Activity.RegisterActivity">
+	
+		<android.support.design.widget.TextInputLayout
+			android:layout_margin="8dp"
+			android:layout_width = "match_parent"
+		    android:layout_height = "wrap_content">
+			<android.support.design.widget.TextInputEditText
+				android:id="@+id/handleEditText"
+				android:hint="Handle"
+				android:layout_width = "match_parent"
+			    android:layout_height = "wrap_content"/>
+		</android.support.design.widget.TextInputLayout>
+	
+	<android.support.design.widget.TextInputLayout
+		android:id="@+id/EmailTextInputLayout"
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content" android:layout_marginTop = "80dp"
+		android:layout_alignParentTop = "true" android:layout_alignParentLeft = "true"
+		android:layout_alignParentStart = "true">
+		<android.support.design.widget.TextInputEditText
+			android:id = "@+id/emailEditText"
+			android:layout_width = "match_parent"
+			android:layout_height = "wrap_content"
+			android:layout_alignParentLeft = "true"
+			android:layout_alignParentStart = "true"
+			android:layout_alignParentTop = "true"
+			android:layout_margin = "8dp"
+			android:layout_marginTop = "94dp"
+			android:hint = "Email"
+			android:inputType = "textEmailAddress"/>
+	</android.support.design.widget.TextInputLayout>
+	
+	<android.support.design.widget.TextInputLayout
+		android:id="@+id/passwordTextInputLayout"
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content" android:layout_below = "@+id/EmailTextInputLayout"
+		android:layout_alignParentLeft = "true" android:layout_alignParentStart = "true"
+		android:layout_marginTop = "19dp">
+		<android.support.design.widget.TextInputEditText
+			android:layout_margin="8dp"
+			android:id = "@+id/passwordEditText"
+			android:layout_width = "match_parent"
+			android:layout_height = "wrap_content"
+			android:layout_marginTop = "29dp"
+			android:hint = "Password" android:inputType = "textPassword"
+			android:layout_alignParentLeft = "true"
+			android:layout_alignParentStart = "true"/>
+	
+	</android.support.design.widget.TextInputLayout>
+
+	<Button
+		android:layout_margin="8dp"
+		android:id="@+id/nextButton"
+		android:hint="Next"
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_centerVertical = "true" android:layout_centerHorizontal = "true"/>
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="2dp"
+		android:background="#cecece"
+		android:layout_above="@+id/linearLayout2"
+		android:id = "@+id/view"/>
+	<LinearLayout
+		android:id="@+id/linearLayout2"
+		android:layout_width = "match_parent"
+		android:layout_height = "48dp"
+		android:orientation = "horizontal"
+		android:gravity="center"
+		android:layout_alignParentBottom = "true"
+		android:layout_alignParentLeft = "true"
+		android:layout_alignParentStart = "true">
+		<TextView
+			android:textAlignment="center"
+			android:textSize="16sp"
+			android:hint="Already have an Account?"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"/>
+		<TextView
+			android:id="@+id/signInTextView"
+			android:layout_marginLeft="2dp"
+			android:textAlignment="center"
+			android:textSize="16sp"
+			android:text="Sign in"
+			android:textStyle="bold"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"/>
+	</LinearLayout>
+</RelativeLayout>
