@@ -7,7 +7,7 @@ import java.util.Date;
  */
 
 public class Message {
-    private String messageUser;
+    private User messageUser;
     private String messageText;
     private long messageTime;
 
@@ -15,13 +15,13 @@ public class Message {
     public Message() {
     }
 
-    public Message(String messageUser, String messageText) {
+    public Message(User messageUser, String messageText) {
         this.messageUser = messageUser;
         this.messageText = messageText;
         this.messageTime = new Date().getTime();
     }
 
-    public String getMessageUser() {
+    public User getMessageUser() {
         return messageUser;
     }
 

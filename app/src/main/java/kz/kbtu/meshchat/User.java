@@ -41,4 +41,8 @@ public class User {
 				", email='" + email + '\'' +
 				'}';
 	}
+	
+	public String getHash() {
+		return Utils.hash(email);
+	}
 }
