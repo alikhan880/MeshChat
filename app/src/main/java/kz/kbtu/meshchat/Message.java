@@ -12,6 +12,9 @@ public class Message {
     private long messageTime;
 
 
+    public Message() {
+    }
+
     public Message(String messageUser, String messageText) {
         this.messageUser = messageUser;
         this.messageText = messageText;
