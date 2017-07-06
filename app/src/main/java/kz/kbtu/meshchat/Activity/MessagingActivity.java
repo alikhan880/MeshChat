@@ -73,6 +73,5 @@ public class MessagingActivity extends AppCompatActivity {
         String userFromEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String userToEmail = userTo.getEmail();
         //HERE WE NEED TO FINISH SENDING TO FIREBASE. COULDN'T UNDERSTAND THE WAY HOW YOU WANT TO GET SENDING USER INSTANCE
-        
     }
 }
