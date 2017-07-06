@@ -11,7 +11,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-import kz.kbtu.meshchat.Chat;
 import kz.kbtu.meshchat.Message;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.Utils;
@@ -23,11 +22,9 @@ import kz.kbtu.meshchat.Utils;
 public class RecyclerMessagesAdapter extends RecyclerView.Adapter<RecyclerMessagesAdapter.ViewHolder> {
 	
 	private ArrayList<Message> messages;
-	private Chat chat;
-	
-	public RecyclerMessagesAdapter(ArrayList<Message> messages, Chat chat) {
+
+	public RecyclerMessagesAdapter(ArrayList<Message> messages) {
 		this.messages = messages;
-		this.chat = chat;
 	}
 	
 	@Override

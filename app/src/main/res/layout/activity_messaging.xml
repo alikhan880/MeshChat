@@ -9,8 +9,31 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_messaging"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
 
     </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_text_send"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:hint="Enter message..."/>
+
+        <Button
+            android:id="@+id/button_send_message"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Send"/>
+
+    </LinearLayout>
 
 </LinearLayout>

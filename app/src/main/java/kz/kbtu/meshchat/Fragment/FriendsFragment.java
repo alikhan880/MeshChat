@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class FriendsFragment extends Fragment implements RecyclerItemListener {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = dataSnapshot.getValue(User.class);
-//                Log.d("DEBUG", user.getUsername() + "");
+                Log.d("DEBUG", user.getUsername() + "");
                 if(!user.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
                     users.add(user);
                 }
@@ -67,8 +68,8 @@ public class FriendsFragment extends Fragment implements RecyclerItemListener {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                User user = dataSnapshot.getValue(User.class);
-//                Log.d("DEBUG", user.getUsername() + "");
+                User user = dataSnapshot.getValue(User.class);
+                Log.d("DEBUG", user.getUsername() + "");
             }
 
             @Override
