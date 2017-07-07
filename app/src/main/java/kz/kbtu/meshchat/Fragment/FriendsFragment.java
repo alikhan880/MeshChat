@@ -16,14 +16,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import kz.kbtu.meshchat.Activity.MessagingActivity;
 import kz.kbtu.meshchat.Adapter.RecyclerFriendsAdapter;
+import kz.kbtu.meshchat.Chat;
 import kz.kbtu.meshchat.Interface.RecyclerItemListener;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.User;
+import kz.kbtu.meshchat.Utils;
 
 
 public class FriendsFragment extends Fragment implements RecyclerItemListener {
@@ -97,8 +100,13 @@ public class FriendsFragment extends Fragment implements RecyclerItemListener {
     @Override
     public void itemClicked(int position) {
         User user = adapter.getItem(position);
-        Intent intent = new Intent(getActivity(), MessagingActivity.class);
+        String chatHash = Chat.getChatHash(user.getHash(),
+		        Utils.hash(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+//	    Chat chat = ;
+//	    FirebaseDatabase.getInstance().getReference("Chats/" + chatHash)
+	    Intent intent = new Intent(getActivity(), MessagingActivity.class);
         intent.putExtra("user", user);
+	    intent.putExtra("chat", (new Gson()).toJson(chat));
         startActivity(intent);
     }
 }

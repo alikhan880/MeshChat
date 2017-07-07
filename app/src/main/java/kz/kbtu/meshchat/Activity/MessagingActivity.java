@@ -12,10 +12,12 @@ import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import kz.kbtu.meshchat.Adapter.RecyclerMessagesAdapter;
+import kz.kbtu.meshchat.Chat;
 import kz.kbtu.meshchat.Message;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.User;
@@ -37,7 +39,7 @@ public class MessagingActivity extends AppCompatActivity {
     private EditText editTextMessage;
     private Button buttonSendMessage;
     private User userTo;
-
+	private Chat chat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +47,15 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
         userTo = intent.getParcelableExtra("user");
-        bind();
+        chat = new Gson().fromJson(intent.getStringExtra("chat"), Chat.class);
+	    bind();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_messaging);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageArrayList = new ArrayList<>();
 
-        adapter = new RecyclerMessagesAdapter(messageArrayList);
+        adapter = new RecyclerMessagesAdapter(messageArrayList, chat);
         recyclerView.setAdapter(adapter);
-		
 	}
-
 
 	private void bind(){
         editTextMessage = (EditText)findViewById(R.id.edit_text_send);
@@ -72,6 +73,9 @@ public class MessagingActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         String userFromEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String userToEmail = userTo.getEmail();
-        //HERE WE NEED TO FINISH SENDING TO FIREBASE. COULDN'T UNDERSTAND THE WAY HOW YOU WANT TO GET SENDING USER INSTANCE
+	    
+	    
+	    
+//        HERE WE NEED TO FINISH SENDING TO FIREBASE. COULDN'T UNDERSTAND THE WAY HOW YOU WANT TO GET SENDING USER INSTANCE
     }
 }
