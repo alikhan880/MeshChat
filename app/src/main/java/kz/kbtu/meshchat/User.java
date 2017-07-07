@@ -3,8 +3,6 @@ package kz.kbtu.meshchat;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 /**
 <<<<<<< HEAD
  * Created by abakh on 04-Jul-17.
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 public class User implements Parcelable{
 	private String username;
 	private String email;
-	private ArrayList<String> recentUsers;
+//	private ArrayList<String> recentUsers;
 
 	public User(){
 
@@ -22,7 +20,7 @@ public class User implements Parcelable{
 	protected User(Parcel in) {
 		username = in.readString();
 		email = in.readString();
-		in.readStringList(recentUsers);
+//		in.readStringList(recentUsers);
 	}
 
 	public static final Creator<User> CREATOR = new Creator<User>() {
@@ -48,6 +46,7 @@ public class User implements Parcelable{
 	public User(String username, String email) {
 		this.username = username;
 		this.email = email;
+//		this.recentUsers = new ArrayList<>();
 	}
 	
 	public String getUsername() {
@@ -65,16 +64,15 @@ public class User implements Parcelable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "User{" +
 				"username='" + username + '\'' +
 				", email='" + email + '\'' +
-				", recentUsers=" + recentUsers +
 				'}';
 	}
-	
+
 	public String getHash() {
 		return Utils.hash(email);
 	}
@@ -88,14 +86,7 @@ public class User implements Parcelable{
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(username);
 		dest.writeString(email);
-		dest.writeArray(recentUsers.toArray());
+//		dest.writeArray(recentUsers.toArray());
 	}
-	
-	public ArrayList<String> getRecentUsers() {
-		return recentUsers;
-	}
-	
-	public void setRecentUsers(ArrayList<String> recentUsers) {
-		this.recentUsers = recentUsers;
-	}
+
 }

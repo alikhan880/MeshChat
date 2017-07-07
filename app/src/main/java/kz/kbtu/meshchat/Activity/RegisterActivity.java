@@ -1,11 +1,10 @@
 package kz.kbtu.meshchat.Activity;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.User;
+import kz.kbtu.meshchat.Utils;
 
 public class RegisterActivity extends AppCompatActivity {
 	
@@ -81,8 +81,8 @@ public class RegisterActivity extends AppCompatActivity {
 				if (!task.isSuccessful()) {
 					Toast.makeText(RegisterActivity.this, "Failed to sign up", Toast.LENGTH_SHORT).show();
 				} else {
-					DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").push();
-					ref.setValue(user);
+					DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/users");
+					ref.child(Utils.hash(user.getEmail())).setValue(user);
 					setResult(RESULT_OK);
 					finish();
 				}
