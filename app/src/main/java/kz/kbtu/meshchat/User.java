@@ -3,11 +3,14 @@ package kz.kbtu.meshchat;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
 <<<<<<< HEAD
  * Created by abakh on 04-Jul-17.
  */
 
+@IgnoreExtraProperties
 public class User implements Parcelable{
 	private String username;
 	private String email;
@@ -89,4 +92,9 @@ public class User implements Parcelable{
 //		dest.writeArray(recentUsers.toArray());
 	}
 
+	public interface RetrieveListener {
+		void onSuccess(User user);
+		void onFail();
+	}
+	
 }

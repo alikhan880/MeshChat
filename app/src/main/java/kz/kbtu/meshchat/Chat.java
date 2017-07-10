@@ -55,8 +55,8 @@ public class Chat {
 	}
 	
 	public static String getChatHash(String a, String b) {
-		if (a.compareTo(b) == -1) {
-			String t = a;
+		if (a.compareTo(b) > 0) {
+			final String t = a;
 			a = b;
 			b = t;
 		}

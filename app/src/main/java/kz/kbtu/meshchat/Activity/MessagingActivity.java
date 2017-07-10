@@ -1,16 +1,20 @@
 package kz.kbtu.meshchat.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,23 +25,15 @@ import java.util.ArrayList;
 
 import kz.kbtu.meshchat.Adapter.RecyclerMessagesAdapter;
 import kz.kbtu.meshchat.Chat;
+import kz.kbtu.meshchat.FirebaseUtils;
 import kz.kbtu.meshchat.Message;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.User;
 import kz.kbtu.meshchat.Utils;
 
-/*
-
-PLEASE CHECK LINE NUMBER 65
-
-
-
-
- */
-
 public class MessagingActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
+	private static final String TAG = "MessagingActivity";
+	private RecyclerView recyclerView;
     private ArrayList<Message> messageArrayList;
     private RecyclerMessagesAdapter adapter;
     private EditText editTextMessage;
@@ -46,6 +42,8 @@ public class MessagingActivity extends AppCompatActivity {
     private User userFrom;
 	private Chat chat;
     private String chatHash;
+	
+	private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,51 +52,67 @@ public class MessagingActivity extends AppCompatActivity {
         bind();
         Intent intent = getIntent();
         userTo = intent.getParcelableExtra("user");
-
+	    
         recyclerView = (RecyclerView) findViewById(R.id.recycler_messaging);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageArrayList = new ArrayList<>();
         go();
-
 	}
-
-
+	
+	private void setListeners() {
+		DatabaseReference ref = FirebaseDatabase.getInstance().getReference("messages").child(chatHash);
+		ref.addChildEventListener(new ChildEventListener() {
+			@Override
+			public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+				Message message = dataSnapshot.getValue(Message.class);
+				messageArrayList.add(message);
+				adapter.notifyDataSetChanged();
+			}
+			
+			@Override
+			public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+				
+			}
+			
+			@Override
+			public void onChildRemoved(DataSnapshot dataSnapshot) {
+				
+			}
+			
+			@Override
+			public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+				
+			}
+			
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+				
+			}
+		});
+	}
+	
 	private void go(){
-        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+		dialog = new ProgressDialog(this);
+		dialog.setTitle("Wait a second");
+		dialog.show();
+        FirebaseUtils.getUserByEmailAsync(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+		        new User.RetrieveListener() {
             @Override
-            protected Void doInBackground(Void... params) {
-                //Take current user from firebase as User class;
-                DatabaseReference refForUser = FirebaseDatabase.getInstance().getReference().child("users")
-                        .child(Utils.hash(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-                refForUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        userFrom = dataSnapshot.getValue(User.class);
-//                        Log.d("DEBUG", userFrom.toString());
-                        chatHash = Chat.getChatHash(userTo.getHash(),
-                                userFrom.getHash());
-                    }
+            public void onSuccess(User user) {
+	            userFrom = user;
+	            chatHash = Chat.getChatHash(userFrom.getHash(), userTo.getHash());
+	            adapter = new RecyclerMessagesAdapter(messageArrayList, chat);
+				setListeners();
+	            recyclerView.setAdapter(adapter);
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                ////
-
-
-                return null;
+	            dialog.dismiss();
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                adapter = new RecyclerMessagesAdapter(messageArrayList, chat);
-                recyclerView.setAdapter(adapter);
-//                Log.d("HASH", chatHash);
+            public void onFail() {
+				Log.d(TAG, "Epic fail");
             }
-        };
-        task.execute();
+        });
     }
 
 	private void bind(){
@@ -108,17 +122,14 @@ public class MessagingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage(editTextMessage.getText().toString());
+	            editTextMessage.setText("");
             }
         });
     }
-
-
+    
     private void sendMessage(String text){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/messages");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("messages");
 
         ref.child(chatHash).push().setValue(new Message(userFrom, text));
-
-	    
-//        HERE WE NEED TO FINISH SENDING TO FIREBASE. COULDN'T UNDERSTAND THE WAY HOW YOU WANT TO GET SENDING USER INSTANCE
     }
 }

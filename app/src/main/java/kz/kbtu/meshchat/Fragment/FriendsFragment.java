@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -30,13 +31,12 @@ public class FriendsFragment extends Fragment implements RecyclerItemListener {
 
     private RecyclerView recycler;
     private RecyclerFriendsAdapter adapter;
+	private ProgressBar progressBar;
     private ArrayList<User> users;
 
     public FriendsFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,52 +44,56 @@ public class FriendsFragment extends Fragment implements RecyclerItemListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         users = new ArrayList<>();
-        getUsers();
-        recycler = (RecyclerView)v.findViewById(R.id.recycler_friends);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+	    recycler = (RecyclerView)v.findViewById(R.id.recycler_friends);
+	    recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        progressBar = (ProgressBar) v.findViewById(R.id.progress_bar_friends);
+	    setListeners();
         adapter = new RecyclerFriendsAdapter(users, this);
         recycler.setAdapter(adapter);
         return v;
     }
 
 
-    private void getUsers(){
+    private void setListeners(){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/users");
-        ChildEventListener userListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                User user = dataSnapshot.getValue(User.class);
-                Log.d("DEBUG", user.getUsername() + "");
-                if(!user.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
-                    users.add(user);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                User user = dataSnapshot.getValue(User.class);
-                Log.d("DEBUG", user.getUsername() + "");
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                users.remove(user);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        ref.addChildEventListener(userListener);
+        ref.addChildEventListener(new ChildEventListener() {
+	        @Override
+	        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+		        User user = dataSnapshot.getValue(User.class);
+		        Log.d("DEBUG", user.getUsername() + "");
+		        if(!user.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+			        users.add(user);
+		        }
+		        adapter.notifyDataSetChanged();
+		        if (progressBar.getVisibility() == View.VISIBLE) {
+			        progressBar.setVisibility(View.GONE);
+			        recycler.setVisibility(View.VISIBLE);
+		        }
+	        }
+	
+	        @Override
+	        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+		        User user = dataSnapshot.getValue(User.class);
+		        Log.d("DEBUG", user.getUsername() + "");
+	        }
+	
+	        @Override
+	        public void onChildRemoved(DataSnapshot dataSnapshot) {
+		        User user = dataSnapshot.getValue(User.class);
+		        users.remove(user);
+		        adapter.notifyDataSetChanged();
+	        }
+	
+	        @Override
+	        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+		
+	        }
+	
+	        @Override
+	        public void onCancelled(DatabaseError databaseError) {
+		
+	        }
+        });
 
     }
 
