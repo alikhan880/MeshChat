@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY_REQUEST_CODE);
 		}
-        getUser();
-        loadProfile();
+
     }
 
     private void getUser(){
@@ -150,7 +149,8 @@ public class MainActivity extends AppCompatActivity
 		switch (requestCode) {
 			case LOGIN_ACTIVITY_REQUEST_CODE:
 				if (resultCode == RESULT_OK) {
-					loadProfile();
+                    getUser();
+                    loadProfile();
 //                    showFragment(new MessagesFragment());
 				} else {
 					setResult(RESULT_CANCELED);
