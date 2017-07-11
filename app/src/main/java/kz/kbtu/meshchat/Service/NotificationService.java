@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import kz.kbtu.meshchat.R;
+import kz.kbtu.meshchat.User;
 import kz.kbtu.meshchat.Utils;
 
 /**
@@ -23,6 +23,7 @@ import kz.kbtu.meshchat.Utils;
 
 public class NotificationService extends Service {
     private String userHash;
+    private User user;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,7 +33,7 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        userHash = Utils.hash(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
     }
 
     private void listen(){
@@ -77,6 +78,8 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
+        user = intent.getParcelableExtra("user");
+        userHash = Utils.hash(user.getEmail());
         listen();
         return START_STICKY;
     }

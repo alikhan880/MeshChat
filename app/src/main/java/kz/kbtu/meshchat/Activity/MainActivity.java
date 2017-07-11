@@ -23,10 +23,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import kz.kbtu.meshchat.FirebaseUtils;
 import kz.kbtu.meshchat.Fragment.FriendsFragment;
 import kz.kbtu.meshchat.Fragment.RecentFragment;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.Service.NotificationService;
+import kz.kbtu.meshchat.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private TextView tvUsername;
     private TextView tvUserEmail;
     private ImageView ivUserPhoto;
+    private User userSession;
 
 	
 	@Override
@@ -67,9 +70,25 @@ public class MainActivity extends AppCompatActivity
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY_REQUEST_CODE);
 		}
-        startService(new Intent(this, NotificationService.class));
+        getUser();
         loadProfile();
     }
+
+    private void getUser(){
+        FirebaseUtils.getUserByEmailAsync(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+                new User.RetrieveListener() {
+                    @Override
+                    public void onSuccess(User user) {
+                        userSession = user;
+                        startService(new Intent(MainActivity.this, NotificationService.class).putExtra("user", userSession));
+                    }
+
+                    @Override
+                    public void onFail() {
+                    }
+                });
+    }
+
 
 	private void loadProfile(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
