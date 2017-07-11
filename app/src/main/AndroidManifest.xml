@@ -21,6 +21,8 @@
         <activity android:name=".Activity.LoginActivity"></activity>
         <activity android:name=".Activity.RegisterActivity"></activity>
         <activity android:name=".Activity.MessagingActivity"></activity>
+
+        <service android:name=".Service.NotificationService" />
     </application>
 
 </manifest>

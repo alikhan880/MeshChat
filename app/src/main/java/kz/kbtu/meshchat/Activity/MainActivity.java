@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import kz.kbtu.meshchat.Fragment.FriendsFragment;
 import kz.kbtu.meshchat.Fragment.RecentFragment;
 import kz.kbtu.meshchat.R;
+import kz.kbtu.meshchat.Service.NotificationService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY_REQUEST_CODE);
 		}
-
+        startService(new Intent(this, NotificationService.class));
         loadProfile();
     }
 

@@ -2,7 +2,6 @@ package kz.kbtu.meshchat.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -27,6 +24,7 @@ import kz.kbtu.meshchat.Adapter.RecyclerMessagesAdapter;
 import kz.kbtu.meshchat.Chat;
 import kz.kbtu.meshchat.FirebaseUtils;
 import kz.kbtu.meshchat.Message;
+import kz.kbtu.meshchat.Notification;
 import kz.kbtu.meshchat.R;
 import kz.kbtu.meshchat.User;
 import kz.kbtu.meshchat.Utils;
@@ -129,7 +127,8 @@ public class MessagingActivity extends AppCompatActivity {
     
     private void sendMessage(String text){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("messages");
-
-        ref.child(chatHash).push().setValue(new Message(userFrom, text));
+		DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("notification");
+        refNotify.child(Utils.hash(userTo.getEmail())).setValue(new Notification());
+		ref.child(chatHash).push().setValue(new Message(userFrom, text));
     }
 }
