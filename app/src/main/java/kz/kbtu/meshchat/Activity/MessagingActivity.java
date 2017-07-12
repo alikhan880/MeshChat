@@ -53,19 +53,7 @@ public class MessagingActivity extends AppCompatActivity {
 	    
         recyclerView = (RecyclerView) findViewById(R.id.recycler_messaging);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-			@Override
-			public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-				if(bottom < oldBottom){
-					recyclerView.postDelayed(new Runnable() {
-						@Override
-						public void run() {
-							recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
-						}
-					}, 100);
-				}
-			}
-		});
+
         messageArrayList = new ArrayList<>();
         go();
 	}
@@ -117,6 +105,21 @@ public class MessagingActivity extends AppCompatActivity {
 				setListeners();
 	            recyclerView.setAdapter(adapter);
 				recyclerView.scrollToPosition(messageArrayList.size() - 1);
+				recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+					@Override
+					public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+						if(bottom < oldBottom){
+							recyclerView.postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									if(recyclerView.getAdapter().getItemCount() != 0){
+										recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+									}
+								}
+							}, 100);
+						}
+					}
+				});
 
 	            dialog.dismiss();
             }
