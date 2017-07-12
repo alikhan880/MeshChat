@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +22,15 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import kz.kbtu.meshchat.FirebaseUtils;
 import kz.kbtu.meshchat.Fragment.FriendsFragment;
 import kz.kbtu.meshchat.Fragment.RecentFragment;
 import kz.kbtu.meshchat.R;
-import kz.kbtu.meshchat.Service.NotificationService;
 import kz.kbtu.meshchat.User;
+import kz.kbtu.meshchat.Utils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY_REQUEST_CODE);
 		}
+		else getUser();
 
     }
 
@@ -79,7 +82,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onSuccess(User user) {
                         userSession = user;
-                        startService(new Intent(MainActivity.this, NotificationService.class).putExtra("user", userSession));
+                        Log.d("DEBUG", Utils.hash(userSession.getEmail()));
+                        FirebaseMessaging.getInstance().subscribeToTopic(Utils.hash(userSession.getEmail()));
                     }
 
                     @Override

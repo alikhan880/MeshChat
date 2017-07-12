@@ -7,16 +7,48 @@ import java.util.Random;
  */
 
 public class Notification {
-    private int number;
-    public Notification() {
-        this.number = new Random().nextInt();
+    private String name;
+    private String text;
+    private String hashUserTo;
+    private int randNumb;
+
+
+    public Notification(String name, String text, String hashUserTo) {
+        this.name = name;
+        this.text = text;
+        this.hashUserTo = hashUserTo;
+        this.randNumb = new Random().nextInt();
     }
 
-    public int getNumber() {
-        return number;
+    public String getName() {
+        return name;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getHashUserTo() {
+        return hashUserTo;
+    }
+
+    public void setHashUserTo(String hashUserTo) {
+        this.hashUserTo = hashUserTo;
+    }
+
+    public int getRandNumb() {
+        return randNumb;
+    }
+
+    public void setRandNumb(int randNumb) {
+        this.randNumb = randNumb;
     }
 }

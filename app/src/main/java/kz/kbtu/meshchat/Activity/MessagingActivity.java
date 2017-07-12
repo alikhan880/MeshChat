@@ -127,8 +127,9 @@ public class MessagingActivity extends AppCompatActivity {
     
     private void sendMessage(String text){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("messages");
-		DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("notification");
-        refNotify.child(Utils.hash(userTo.getEmail())).setValue(new Notification());
+		DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("notifications");
+        refNotify.child(Utils.hash(userTo.getEmail()))
+				.setValue(new Notification(userFrom.getUsername(), text, Utils.hash(userTo.getEmail())));
 		ref.child(chatHash).push().setValue(new Message(userFrom, text));
     }
 }
