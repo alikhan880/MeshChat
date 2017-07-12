@@ -65,21 +65,22 @@ public class MessagingActivity extends AppCompatActivity {
 				Message message = dataSnapshot.getValue(Message.class);
 				messageArrayList.add(message);
 				adapter.notifyDataSetChanged();
+				recyclerView.scrollToPosition(messageArrayList.size() - 1);
 			}
 			
 			@Override
 			public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-				
+				adapter.notifyDataSetChanged();
 			}
 			
 			@Override
 			public void onChildRemoved(DataSnapshot dataSnapshot) {
-				
+				adapter.notifyDataSetChanged();
 			}
 			
 			@Override
 			public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-				
+				adapter.notifyDataSetChanged();
 			}
 			
 			@Override
@@ -102,6 +103,7 @@ public class MessagingActivity extends AppCompatActivity {
 	            adapter = new RecyclerMessagesAdapter(messageArrayList, chat);
 				setListeners();
 	            recyclerView.setAdapter(adapter);
+				recyclerView.scrollToPosition(messageArrayList.size() - 1);
 
 	            dialog.dismiss();
             }
@@ -119,13 +121,16 @@ public class MessagingActivity extends AppCompatActivity {
         buttonSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(editTextMessage.getText().toString());
-	            editTextMessage.setText("");
+                if(!editTextMessage.getText().toString().equals("")){
+					sendMessage(editTextMessage.getText().toString());
+					editTextMessage.setText("");
+				}
             }
         });
     }
-    
-    private void sendMessage(String text){
+
+
+	private void sendMessage(String text){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("messages");
 		DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("notifications");
         refNotify.child(Utils.hash(userTo.getEmail()))
