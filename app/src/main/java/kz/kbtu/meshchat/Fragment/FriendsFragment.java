@@ -1,6 +1,7 @@
 package kz.kbtu.meshchat.Fragment;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.github.ybq.android.spinkit.style.RotatingPlane;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +49,11 @@ public class FriendsFragment extends Fragment implements RecyclerItemListener {
 	    recycler = (RecyclerView)v.findViewById(R.id.recycler_friends);
 	    recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         progressBar = (ProgressBar) v.findViewById(R.id.progress_bar_friends);
+	    RotatingPlane rotatingPlane = new RotatingPlane();
+	    rotatingPlane.setColor(R.color.colorAccent);
+	    rotatingPlane.setBounds(50, 50, 100, 100);
+	    
+	    progressBar.setIndeterminateDrawable(rotatingPlane);
 	    setListeners();
         adapter = new RecyclerFriendsAdapter(users, this);
         recycler.setAdapter(adapter);

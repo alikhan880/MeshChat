@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="kz.kbtu.meshchat.Fragment.FriendsFragment">
 
-	<FrameLayout android:layout_width = "match_parent"
+	<RelativeLayout android:layout_width = "match_parent"
 	             android:layout_height = "match_parent">
 		<android.support.v7.widget.RecyclerView
 			android:id="@+id/recycler_friends"
@@ -15,8 +15,9 @@
 		<ProgressBar
 			android:id="@+id/progress_bar_friends"
 			android:visibility="visible"
-			android:layout_width = "match_parent"
-			android:layout_height = "match_parent"/>
-	</FrameLayout>
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content" android:layout_centerVertical = "true"
+			android:layout_centerHorizontal = "true"/>
+	</RelativeLayout>
 	
 </LinearLayout>
